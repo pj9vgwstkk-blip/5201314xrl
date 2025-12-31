@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>布布的小熊猜猜乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            /* 插入背景图 */
+            background-image: url('https://s41.ax1x.com/2025/12/31/pZNBXHs.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            /* 增加半透明遮罩，提升文字可读性 */
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 0;
+        }
+        /* 所有内容层级高于遮罩 */
+        #startBtn, #gameBox, #passwordPage {
+            position: relative;
+            z-index: 1;
+        }
+        #startBtn {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #startBtn:hover {
+            background-color: #ff1493;
+        }
+        #gameBox {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        #question {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+        #answerInput {
+            padding: 10px 15px;
+            font-size: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+        }
+        #submitBtn {
+            padding: 10px 25px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #submitBtn:hover {
+            background-color: #45a049;
+        }
+        #passwordPage {
+            display: none;
+            font-size: 28px;
+            color: #2c3e50;
+            font-weight: bold;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: 3px dashed #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn">开始游戏</button>
+    <div id="gameBox">
+        <div id="question">谁是布布最喜欢的熊</div>
+        <input type="text" id="answerInput" placeholder="输入答案">
+        <button id="submitBtn">提交答案</button>
+    </div>
+    <div id="passwordPage">密码：iCsu</div>
+
+    <script>
+        // 获取页面元素
+        const startBtn = document.getElementById('startBtn');
+        const gameBox = document.getElementById('gameBox');
+        const answerInput = document.getElementById('answerInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const passwordPage = document.getElementById('passwordPage');
+        const correctAnswer = '一二';
+
+        // 点击开始按钮进入游戏
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            gameBox.style.display = 'flex';
+        });
+
+        // 提交答案验证逻辑
+        submitBtn.addEventListener('click', () => {
+            const userAnswer = answerInput.value.trim();
+            if (userAnswer === correctAnswer) {
+                gameBox.style.display = 'none';
+                passwordPage.style.display = 'block';
+            } else {
+                alert('答案错误，请重新输入！');
+                answerInput.value = '';
+                answerInput.focus();
+            }
+        });
+
+        // 支持回车键提交答案
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
